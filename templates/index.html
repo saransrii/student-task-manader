@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Uber CRUD App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Uber Customer Management</h1>
+        
+        <div class="form-box">
+            <h3>Add New Customer</h3>
+            <form action="/insert" method="POST">
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="text" name="mobile" placeholder="Mobile" required>
+                <input type="number" name="amount" placeholder="Fare Amount" required>
+                <input type="text" name="location" placeholder="Location" required>
+                <button type="submit" class="btn-add">Add Ride</button>
+            </form>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Mobile</th>
+                    <th>Fare</th>
+                    <th>Location</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in customers %}
+                <tr>
+                    <form action="/update" method="POST">
+                        <td><input type="hidden" name="name" value="{{row.name}}">{{row.name}}</td>
+                        <td><input type="text" name="mobile" value="{{row.mobile}}"></td>
+                        <td><input type="number" name="amount" value="{{row.amount}}"></td>
+                        <td><input type="text" name="location" value="{{row.location}}"></td>
+                        <td>
+                            <button type="submit" class="btn-up">Update</button>
+                            <a href="/delete/{{row.name}}" class="btn-del">Delete</a>
+                        </td>
+                    </form>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
